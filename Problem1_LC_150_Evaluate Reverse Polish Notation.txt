@@ -1,0 +1,57 @@
+// https://leetcode.com/problems/evaluate-reverse-polish-notation/description/
+
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens) {
+        stack<string>s;
+       for(int i=0;i<tokens.size();i++)
+       {
+           
+           if(tokens[i]=="+" || tokens[i]=="*" || tokens[i]=="/" || tokens[i]=="-")
+           {
+               string s1=s.top();
+               s.pop();
+               string s2=s.top();
+               cout<<"s1: "<<" s2: "<<s2<<endl;
+               s.pop();
+               long long int num1;
+               long long int num2;
+                stringstream obj;
+                obj<<s1;
+                obj>>num1;
+                stringstream obj2;
+                obj2<<s2;
+                obj2>>num2;
+                cout<<"num1: "<<num1<<" num2: "<<num2<<endl;
+                // char op1 = (tokens[i][0]);
+                // cout<<"op1: "<<op1<<endl;
+                int op = (int)(tokens[i][0]);
+                cout<<"op: "<<op<<endl;
+                if(op==43)
+                {
+                    long long int ans=num1+num2;
+                    s.push(to_string(ans));
+                }
+                else if(op==42)
+                {
+                    long long int ans=num1*num2;
+                    s.push(to_string(ans));
+                }
+                else if(op==45)
+                {
+                    long long int ans=num2-num1;
+                    s.push(to_string(ans));
+                }
+                else  if(op==47)
+                {
+                    int ans=num2/num1;
+                    s.push(to_string(ans));
+                }
+           }
+           else
+           s.push(tokens[i]);
+       }
+       string fans=s.top();
+       return stoi(fans);
+    }
+};
