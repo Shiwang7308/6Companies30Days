@@ -1,0 +1,46 @@
+class Solution {
+public:
+    int minimumCardPickup(vector<int>& cards) {
+        map<int,vector<int>>mp;
+        for(int i=0;i<cards.size();i++)
+        {
+            mp[cards[i]].push_back(i);
+        }
+        int ans=INT_MAX;
+        for(auto it:mp)
+        {
+            vector<int>temp=it.second;
+            if(temp.size()==0)
+            continue;
+            
+            for(int i=0;i<temp.size()-1;i++)
+            {
+               int diff=temp[i+1]-temp[i];
+               diff+=1;
+               ans=min(diff,ans);
+            }
+        }
+        if(ans==INT_MAX)
+        return -1;
+        else
+        return ans;
+    }
+};
+
+// optimal appraoch
+We need to find the minimum distance between any two matching cards.
+
+For that, we can strore the last position of a card. If we find the matching card, we use the last position to find out the distance.
+
+C++
+Since the last array is initialized with zeros, we need to do i + 1.
+
+int minimumCardPickup(vector<int>& cards) {
+    int last[1000001] = {}, res = INT_MAX;
+    for (int i = 0; i < cards.size(); ++i) {
+        if (last[cards[i]])
+            res = min(res, i - last[cards[i]] + 2);
+        last[cards[i]] = i + 1;
+    }
+    return res == INT_MAX ? -1 : res;
+}
