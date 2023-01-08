@@ -1,0 +1,78 @@
+class Solution {
+public:
+    bool validSquare(vector<int>& p1, vector<int>& p2, vector<int>& p3, vector<int>& p4) {
+        unordered_map<long long int,int>mp;
+        map<pair<int,int>,int>check;  // for checking cases when same points given like all coordinates are origin
+        int x1=p1[0];
+        int y1=p1[1];
+
+        int x2=p2[0];
+        int y2=p2[1];
+
+        int x3=p3[0];
+        int y3=p3[1];
+
+        int x4=p4[0];
+        int y4=p4[1];
+
+       vector<pair<int,int>>v;
+       v.push_back({x1,y1});
+       check[{x1,y1}]++;
+       v.push_back({x2,y2});
+        check[{x2,y2}]++;
+       v.push_back({x3,y3});
+        check[{x3,y3}]++;
+       v.push_back({x4,y4});
+ check[{x4,y4}]++;
+      
+      if(check.size()<4)
+      return false;
+
+        for(int i=0;i<4;i++)
+        {
+              long long int ans=0;
+              int x=v[i].first;
+              int y=v[i].second;
+            cout<<"row"<<i<<endl;
+            for(int j=0;j<4;j++)
+            {
+                 if(i!=j)
+                 {
+                     int a=v[j].first;
+                     int b=v[j].second;
+                     long long temp1=abs(x-a);
+                     long long temp2=abs(y-b);
+                     ans=temp1+temp2;
+                     mp[ans]++;
+                     cout<<"ans: "<<ans<<" ";
+                 }
+            }
+            cout<<endl;
+        }
+        if(mp.size()>2)
+        return false;
+        else if(mp.size()==2){
+            int c1=-1;
+            int c2=-1;
+           for(auto it:mp)
+           {
+              if(c1==-1)
+              {
+                  c1=it.second;
+                  continue;
+              }
+              else
+              {
+                  c2=it.second;
+                  break;
+              }
+           }
+           if(c1==8 && c2==4 || c1==4 && c2==8)
+           return true;
+           else
+           return false;
+        }
+        else
+        return true;
+    }
+};
